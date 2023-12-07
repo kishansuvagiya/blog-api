@@ -10,7 +10,7 @@ exports.SECURE = async function (req, res, next) {
     if(!token){
       throw new Error("Please attched token ")
     }
-    let decode = jwt.verify(token, "admin")
+    let decode = jwt.verify(token, process.env.ADMIN_KEY)
     // console.log(decode.id);
     let checkUser = await admin.findById(decode.id)
     if(!checkUser){
@@ -36,7 +36,7 @@ exports.signUp = async function (req, res) {
 
         data.password = await bcrypt.hash(data.password, 10)
         const newUser = await admin.create(data)
-        var token = jwt.sign({ id: data._id }, 'admin');
+        var token = jwt.sign({ id: data._id }, process.env.ADMIN_KEY);
         res.status(201).json({
             status: "success",
             message: "SignUp successfully",
@@ -66,7 +66,7 @@ exports.login = async function (req, res, next) {
       if (!password) {
         throw new Error("password is invalid")
       }
-      var token = jwt.sign({ id: loginUser._id }, 'admin');
+      var token = jwt.sign({ id: loginUser._id }, process.env.ADMIN_KEY);
       res.status(200).json({
         status: "success",
         message: "User login succesfully",

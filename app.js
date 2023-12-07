@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -13,7 +14,7 @@ var catRouter = require('./routes/category');
 var blogRouter = require('./routes/blog');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/blogApi')
+mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('Connected!'))
   .catch((error) => console.log(error.message));
 
