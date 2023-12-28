@@ -57,10 +57,10 @@ exports.login = async function (req, res, next) {
       if (!loginData.username || !loginData.password) {
         throw new Error("Please enter valid fields")
       }
-      let loginUser = await admin.findOne({ loginUser: loginData.username })
+      let loginUser = await admin.findOne({ username: loginData.username })
       // console.log(loginUser.password);
       if (!loginUser) {
-        throw new Error("Email is wrong")
+        throw new Error("Username is wrong")
       }
       let password = await bcrypt.compare(loginData.password, loginUser.password)
       if (!password) {
@@ -78,6 +78,22 @@ exports.login = async function (req, res, next) {
       res.status(404).json({
         status: "fail",
         message: error.message,
+      })
+    }
+  }
+
+  exports.AllUser = async (req, res) => {
+    try {
+      let data = await user.find({}, {password: 0})
+      res.status(200).json({
+        status: "success",
+        message: "All Users data",
+        data: data
+      })
+    } catch (error) {
+      res.statis(404).json({
+        status: "fail",
+        message: error.message
       })
     }
   }
