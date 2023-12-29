@@ -67,7 +67,7 @@ exports.login = async function (req, res, next) {
       var token = jwt.sign({ id: username._id }, process.env.JWT_KEY);
       res.status(200).json({
         status: "success",
-        message: "User login succesfully",
+        message: "Login succesfully",
         data: username,
         token
       })

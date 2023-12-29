@@ -43,7 +43,7 @@ exports.DeleteCategory = async function (req, res, next) {
         let data = await catData.findByIdAndDelete(req.query.id)
         res.status(200).json({
             status: "success",
-            message: "Your data deleted",
+            message: "Category delete successfully",
             data: data
         })
     } catch (error) {
@@ -59,7 +59,7 @@ exports.UpdateCategory = async function (req, res, next) {
         let data = await catData.findByIdAndUpdate(req.query.id, req.body, { new: true })
         res.status(200).json({
             status: "success",
-            message: "Your data updated",
+            message: "Category update successfully",
             data: data
         })
     } catch (error) {

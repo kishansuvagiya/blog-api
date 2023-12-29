@@ -14,7 +14,7 @@ exports.SECURE = async function (req, res, next) {
     // console.log(decode.id);
     let checkUser = await admin.findById(decode.id)
     if(!checkUser){
-      throw new Error("User Not found")
+      throw new Error("Admin Not found")
     }
     // req.userId = decode.id
     next()
@@ -69,7 +69,7 @@ exports.login = async function (req, res, next) {
       var token = jwt.sign({ id: loginUser._id }, process.env.ADMIN_KEY);
       res.status(200).json({
         status: "success",
-        message: "User login succesfully",
+        message: "Admin login succesfully",
         data: loginUser,
         token
       })

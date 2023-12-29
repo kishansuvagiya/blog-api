@@ -13,7 +13,7 @@ exports.Addblog =  async function (req, res, next) {
         const newData = await blog.create(data)
         res.status(201).json({
             status: "success",
-            message: "data add successfully",
+            message: "Blog add successfully",
             data: newData
         })
     } catch (error) {
@@ -45,7 +45,7 @@ exports.Deleteblog = async function (req, res, next) {
         let data = await blog.findByIdAndDelete(req.query.id)
         res.status(200).json({
             status: "success",
-            message: "Your data deleted",
+            message: "Your Blog deleted",
             data: data
         })
     } catch (error) {
@@ -61,7 +61,7 @@ exports.Updateblog = async function (req, res, next) {
         let data = await blog.findByIdAndUpdate(req.query.id, req.body, { new: true })
         res.status(200).json({
             status: "success",
-            message: "Your data updated",
+            message: "Your Blog updated",
             data: data
         })
     } catch (error) {
