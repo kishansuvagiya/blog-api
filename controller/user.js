@@ -10,7 +10,7 @@ exports.SECURE = async function (req, res, next) {
       throw new Error("Please attched token ")
     }
     let decode = jwt.verify(token, process.env.JWT_KEY)
-    // console.log(decode.id);
+    // console.log(decode);
     let checkUser = await user.findById(decode.id)
     if(!checkUser){
       throw new Error("User Not found")
@@ -34,7 +34,8 @@ exports.signUp = async function (req, res) {
         }
         data.password = await bcrypt.hash(data.password, 10)
         const newUser = await user.create(data)
-        var token = jwt.sign({ id: data._id }, process.env.JWT_KEY);
+        // console.log(newUser);
+        var token = jwt.sign({ id: newUser._id }, process.env.JWT_KEY);
         res.status(201).json({
             status: "success",
             message: "SignUp successfully",
