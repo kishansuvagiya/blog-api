@@ -8,4 +8,10 @@ router.post('/signup', userController.signUp)
 // ------------- login api----------------------
 router.post('/login', userController.login)
 
+// ------------- Forgot password api----------------------
+router.post('/forgot-password', userController.ForgotPassword)
+
+// ------------- Verify OTP api----------------------
+router.post('/verify-otp', userController.verifyOTP)
+
 module.exports = router;
