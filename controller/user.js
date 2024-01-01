@@ -100,7 +100,7 @@ async function main(email, otpToken) {
     subject: "Forgot Password OTP", // Subject line
     text: `Your OTP for password reset is: ${otpToken}\n\n
     If you did not request this, please ignore this email and your password will remain unchanged.\n`, // plain text body
-    // html: "<b>Hello world?</b>", // html body
+    html: `<p>Your OTP for password reset is: <b>${otpToken}</b></p><br /><p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`, // html body
   });
 
   console.log("Message sent: %s", info.messageId);
