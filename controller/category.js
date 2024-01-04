@@ -3,8 +3,6 @@ var catData = require('../models/category');
 // ------------- category api----------------------
 exports.AddCategory = async function (req, res, next) {
     try {
-        // console.log(req.body);
-        // console.log(req.file);
         let category = req.body
         category.image = req.file.filename
         if (!category.name || !category.image) {

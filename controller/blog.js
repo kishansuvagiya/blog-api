@@ -1,7 +1,9 @@
+const { default: mongoose } = require('mongoose');
 var blog = require('../models/blog');
-
+var catData = require('../models/category');
+var user = require('../models/user')
 // ------------- blog api----------------------
-exports.Addblog =  async function (req, res, next) {
+exports.Addblog = async function (req, res, next) {
     try {
         console.log(req.file);
         let data = req.body
@@ -23,7 +25,7 @@ exports.Addblog =  async function (req, res, next) {
         })
     }
 }
-exports.Allblog= async function (req, res, next) {
+exports.Allblog = async function (req, res, next) {
     try {
         let data = await blog.find().populate(['category', 'author'])
         res.status(200).json({
@@ -68,6 +70,47 @@ exports.Updateblog = async function (req, res, next) {
         res.status(404).json({
             status: "fail",
             message: error.message,
+        })
+    }
+}
+
+exports.search = async (req, res) => {
+    const query = req.query.q
+    try {
+        let searchQuery;
+        // Check if the query is a valid ObjectId
+        if (mongoose.isValidObjectId(query)) {
+            searchQuery = {
+                $or: [
+                    { title: { $regex: query, $options: 'i' } },
+                    { category: query },
+                    { author: query }
+                ]
+            }
+        }
+        // If not a valid ObjectId
+        else {
+            const category = await catData.findOne({ name: { $regex: query, $options: 'i' } })
+            const author = await user.findOne({ fullname: { $regex: query, $options: 'i' } })
+            if (category == null) {
+                if (author == null) {
+                    searchQuery = { title: { $regex: query, $options: 'i' } }
+                } else {
+                    searchQuery = { author: author._id }
+                }
+            }
+            else {
+                searchQuery = { category: category._id }
+            }
+        }
+        let result = await blog.find(searchQuery).populate(['category', 'author'])
+        res.json({
+            data: result
+        })
+    } catch (error) {
+        res.status(404).json({
+            status: "fail",
+            message: error.message
         })
     }
 }

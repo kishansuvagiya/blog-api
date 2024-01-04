@@ -59,7 +59,6 @@ exports.login = async function (req, res, next) {
       throw new Error("Please enter valid fields")
     }
     let email = await user.findOne({ email: loginData.email })
-    // console.log(email.password);
     if (!email) {
       throw new Error("Email is wrong !")
     }

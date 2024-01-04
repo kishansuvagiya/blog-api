@@ -13,12 +13,12 @@ const storage = multer.diskStorage({
       cb(null, uniqueSuffix + file.originalname)
     }
   })
-  
   const upload = multer({ storage: storage })
 
 // ------------- blog api----------------------
 router.post('/', userController.SECURE, upload.single('image'), blogController.Addblog)
 router.get('/', blogController.Allblog)
+router.get('/search', blogController.search)
 router.delete('/', userController.SECURE, blogController.Deleteblog)
 router.put('/', userController.SECURE, upload.single('image'), blogController.Updateblog)
 
